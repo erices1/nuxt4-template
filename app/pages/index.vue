@@ -1,12 +1,9 @@
 <script setup lang="ts">
 
-definePageMeta({
-  middleware:'my-middleware'
-})
 </script>
 
 <template>
-  <div>中间件</div>
+  <h1>Nuxt4-template</h1>
 </template>
 
 <style scoped>
