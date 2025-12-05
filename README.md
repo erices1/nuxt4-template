@@ -37,6 +37,60 @@
 </template>
 
 ```
+# 整合AOS动画库
+## 参考博文
+链接:https://blog.csdn.net/gitblog_01118/article/details/154934278
+## 安装依赖
+```javascript
+pnpm install aos
+```
+## 编写插件aos插件
+app/plugins/aos.client.ts
+### 方式一
+```javascript
+import AOS from 'aos';
+export default defineNuxtPlugin(() => {
+    /**
+     * 方式一，每次都需要在需要使用的界面，进行以下初始化，麻烦
+     
+     */
+    return {
+         provide: {
+             aos: () => AOS
+         }
+    }
+})
+```
+#### 在需要的页面进行初始化
+```javascript
+import {useNuxtApp} from "nuxt/app";
+const { $aos } = useNuxtApp()
+onMounted(()=>{
+    $aos().init({
+        easing: 'ease-out-back',
+        duration: 1000
+    })
+})
+```
+### 方式二
+```javascript
+import AOS from 'aos';
+export default defineNuxtPlugin(() => {
+    AOS.init({
+        easing: 'ease-out-back',
+        duration: 1000
+    })
+})
+```
+#### 直接在页面使用data-aos属性即可
+![img_1.png](img_1.png)
+## 动画类型说明
+```javascript
+淡入淡出类：fade-up、fade-down、fade-left、fade-right等
+翻转类：flip-up、flip-down、flip-left、flip-right
+滑动类：slide-up、slide-down、slide-left、slide-right
+缩放类：zoom-in、zoom-in-up、zoom-in-down、zoom-out等
+```
 # 执行时机注意事项
 > 1.在 script setup 中的代码，会在client、server都执行一次\
 > 2.client、server都执行的情况下，要操作localStorage时，使用useCookie\
