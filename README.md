@@ -240,6 +240,30 @@ export default defineNuxtPlugin(() => {
 ![img_7.png](img_7.png)
 可以看到返回的文档都是空白的，而且首次打开页面，会直接实时请求后端接口
 ![img_8.png](img_8.png)
+
+# 什么是水合
+```javascript
+
+<template>
+ <div>
+  <h1>{{ title }}</h1>
+  <button @click="count++">点击次数: {{ count }}</button>
+ </div>
+</template>
+
+<script setup>
+ const title = '水合示例'
+ const count = ref(0)
+</script>
+
+```
+```javascript
+服务端会生成
+<h1>水合示例</h1>
+<button>点击次数: 0</button>
+这个HTML并返回给客户端，而在客户端中vue会找到这个按钮并添加点击事件监听器。
+```
+
 # Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
