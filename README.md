@@ -354,7 +354,7 @@ yarn build
 bun run build
 ```
 
-Locally preview production build:
+# 预览生成的静态站点（pnpm generate）
 
 ```bash
 # npm
