@@ -196,7 +196,117 @@ if(import.meta.client){
     console.log('client')
 }
 ```
-
+# 整合i18n多语言
+@nuxtjs/i18n默认是基于路由+cookie的，例如：/hello，/vn/hello，/en/hello
+## 安装依赖
+```javascript
+pnpm i @nuxtjs/i18n
+```
+## 配置nuxt.config.ts
+```javascript
+...
+modules: [
+    ...
+    '@nuxtjs/i18n',
+],
+i18n:{
+    defaultLocale: 'cn',
+        baseUrl: 'http://airsat.aseann.net',
+        locales: [
+        {
+            code: 'cn',
+            name: '中文',
+            file: 'cn.json',
+            language:'zh-CN'
+        },
+        {
+            code: 'vn',
+            name: '越南语',
+            file: 'vn.json',
+            language:'vi-VN'
+        },
+        {
+            code: 'en',
+            name: 'EN',
+            file: 'en.json',
+            language: 'en-US'
+        }
+    ],
+},
+...
+```
+## 创建多语言文件
+与app目录同级，创建i18n目录，在i18n目录下创建locales目录，在locales目录下创建cn.json、vn.json、en.json文件
+![img_16.png](img_16.png)
+```javascript
+// cn.json
+{
+    "hello": "你好"
+}
+// vn.json
+{
+    "hello": "Xin chào"
+}
+// en.json
+{
+    "hello": "Hello"
+}
+```
+## 在页面进行使用
+### 在页面通过$t进行使用
+```javascript
+<template>
+    <div>{{ $t('hello') }}</div>
+</template>
+```
+### useI18n的使用
+```javascript
+<template>
+    <div>{{ $t('hello') }}</div>
+    <div class="content-right">
+        <div class="lang-box">
+            <span :class="{active : item.code == locale}" v-for="item in locales" @click="changeLang">{{ item.name }}</span>
+        </div>
+    </div>
+</template>
+<script setup lang="ts">
+const { locales, locale, setLocale } = useI18n()
+// 切换语言示例
+function changeLang(){
+    if(locale.value !='en'){
+        setLocale('en')
+    }else{
+        setLocale('cn')
+    }
+}
+</script>
+```
+### 把正常路径转换为多语言路径
+#### 代码操作(useLocalePath)
+```javascript
+<template>
+    <div>{{ $t('hello') }}</div>
+</template>
+<script setup lang="ts">
+const localePath = useLocalePath()
+function clickDemo(child:any){
+    navigateTo(localePath(`/informationDetail/${child.id}`), {
+        open: {
+            target: '_blank',
+        },
+    })
+}
+</script>
+```
+#### 页面操作($localePath)
+```javascript
+<NuxtLink class="li-item" :to="$localePath(item.path)" v-for="item in navs" :key="item.id">
+  {{ locale!='cn' ? item.enTitle : item.title}}
+</NuxtLink>
+```
+## 注意事项
+### 1.如果是默认语言路由路径的话，不能在浏览器进行直接输入，否则会报404错误
+比如默认语言是cn，那么默认路由路径就是/hello，不能在浏览器直接输入/cn/hello，否则会报404错误
 # 中间件
 ## 中间件分类
 ### 全局中间件(以.global结尾)

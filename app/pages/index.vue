@@ -7,6 +7,7 @@ console.log("index.vue",data)
   <h1 class="text-center mt-100">
     <el-tag type="warning" size="large">Nuxt4-template</el-tag>
     <p>{{ data }}</p>
+    <p>{{ $t('hello') }}</p>
   </h1>
 </template>
 

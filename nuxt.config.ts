@@ -13,10 +13,35 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate',
     '@nuxtjs/color-mode',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxtjs/i18n',
   ],
   elementPlus:{
     icon:"ElIcon"
+  },
+  i18n:{
+    defaultLocale: 'cn',
+    baseUrl: 'http://airsat.aseann.net',
+    locales: [
+      {
+        code: 'cn',
+        name: '中文',
+        file: 'cn.json',
+        language:'zh-CN'
+      },
+      {
+        code: 'vn',
+        name: '越南语',
+        file: 'vn.json',
+        language:'vi-VN'
+      },
+      {
+        code: 'en',
+        name: 'EN',
+        file: 'en.json',
+        language: 'en-US'
+      }
+    ],
   },
   /**
    * @/assets/styles/index.scss
