@@ -196,6 +196,13 @@ if(import.meta.client){
     console.log('client')
 }
 ```
+# 生产环境、开发环境判断
+```javascript
+if(process.env.NODE_ENV !== 'development'){
+    ...
+}
+```
+
 # 整合i18n多语言
 @nuxtjs/i18n默认是基于路由+cookie的，例如：/hello，/vn/hello，/en/hello
 ## 安装依赖
