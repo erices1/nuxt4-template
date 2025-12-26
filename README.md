@@ -76,6 +76,12 @@ npx nuxt upgrade --dedupe
 import { useLoadingIndicator } from 'nuxt/app'
 const { enableLoading, disableLoading } = useLoadingIndicator()
 ```
+## 调整z-index
+```javascript
+.nuxt-loading-indicator{
+  z-index: 9999999999 !important;
+}
+```
 # ISR增量渲染
 ## 最好isr、swr（必须要配置，否则缓存不生效）一起配置，单位为秒
 ![img_15.png](img_15.png)
