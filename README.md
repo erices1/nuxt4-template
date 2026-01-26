@@ -1,6 +1,80 @@
 # 生命周期说明
 > 1.插件、路由中间件、路由校验（介于初始化插件后与执行路由中间件之间执行）在客户端、服务端都会执行，实际业务中，需通过import.meta.xxxx进行判断
 ![img.png](img.png)
+# Nuxt 4.2 -》Nuxt 4.3的改进
+## 1.setPageLayout增加了第二个参数
+```javascript
+export default defineNuxtRouteMiddleware((to) => {
+  // 使用布局模板时，进行传递第二个参数
+  setPageLayout('admin', {
+    sidebar: true,
+    theme: 'dark'
+  })
+})
+// 布局模板
+<script setup lang="ts">
+    defineProps<{
+        sidebar?: boolean
+        theme?: 'light' | 'dark'
+    }>()
+</script>
+```
+## 2.增加了服务端目录别名#server
+```javascript
+// Before: relative path hell
+import { helper } from '../../../../utils/helper'
+
+// After: clean and predictable
+import { helper } from '#server/utils/helper'
+```
+## 3.可拖拽错误叠加
+````javascript
+错误弹窗变成可拖拽
+````
+## 4.增加异步插件构造器
+这使得构建插件可以真正懒惰加载，避免了不需要插件时不必要的代码加载。
+
+![img_20.png](img_20.png)
+```javascript
+export default defineNuxtModule({
+  async setup() {
+    // Lazy load only when actually needed
+    addVitePlugin(() => import('my-cool-plugin').then(r => r.default()))
+    
+    // No need to load webpack plugin if using Vite
+    addWebpackPlugin(() => import('my-cool-plugin/webpack').then(r => r.default()))
+  }
+})
+```
+
+## 5.添加对Webpack/RSPACK构建器的支持
+
+## 6.错误页面返回的数据结构变更
+statusCode → status \
+statusMessage → statusText
+
+## 7.新增查看当前路由所属元组的api
+```javascript
+<script setup lang="ts">
+// This page's meta will include: { groups: ['protected'] }
+useRoute().meta.groups
+</script>
+
+export default defineNuxtRouteMiddleware((to) => {
+    if (to.meta.groups?.includes('protected') && !isAuthenticated()) {
+        return navigateTo('/login')
+    }
+})
+```
+## 8.在某个layer中禁用某个module
+```javascript
+export default defineNuxtConfig({
+  extends: ['../shared-layer'],
+  // disable @nuxt/image from layer
+  image: false,
+})
+```
+
 # 性能
 > 1.能使用composables就别使用plugin，因为plugin在水合阶段执行的（会阻塞服务端页面渲染），而composables在组件初始化阶段执行的 \
 > 2.合理使用plugin的并行异步加载（parallel: true），可以并行加载多个plugin，提高页面加载速度 \
