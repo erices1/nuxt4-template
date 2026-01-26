@@ -15,7 +15,12 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/image',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap'
   ],
+  site:{
+    url: 'https://example.com',
+    name: 'My Awesome Website'
+  },
   elementPlus:{
     icon:"ElIcon"
   },

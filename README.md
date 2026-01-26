@@ -10,7 +10,7 @@
 > 6.使用useFetch、useAsyncData确保在服务器端、客户端都执行的环境下，只在服务端请求一次api（后端仅收到一次请求） \
 > 7.使用NuxtImg标签替代img标签，因为其可以自动进行分辨率转换，提高页面加载速度、清晰度 \
 > 8.使用NuxtLayout标签替代Layout标签，因为其可以设置布局切换动画，提高用户体验 \
-> 9.移除无用依赖，因为它将增加项目的捆绑包大小
+> 9.移除无用依赖，因为它将增加项目的捆绑包大小 \
 > 10.vue相关的性能，使用shallowRef、v-memo、v-once进行性能优化
 ```javascript
 <template>
@@ -104,7 +104,6 @@ import AOS from 'aos';
 export default defineNuxtPlugin(() => {
     /**
      * 方式一，每次都需要在需要使用的界面，进行以下初始化，麻烦
-     
      */
     return {
          provide: {
@@ -445,6 +444,36 @@ const dataTwice = await $fetch('/api/item')
 ```
 
 # 最佳实践
+## sitemap站点地图的应用
+### 安装依赖模块
+```javascript
+npx nuxt module add @nuxtjs/sitemap
+```
+安装完模块，会自动添加到nuxt.config.ts
+![img_17.png](img_17.png)
+### 在nuxt.config.ts进行配置
+```javascript
+...
+site:{
+    url: 'https://example.com',
+    name: 'My Awesome Website'
+}
+...
+```
+### 执行打包测试
+```javascript
+npm run build
+```
+### 访问测试
+```javascript
+访问http://127.0.0.1:3000/sitemap.xml
+```
+![img_18.png](img_18.png)
+
+![img_19.png](img_19.png)
+
+> 可以看到站点地图列出来的地址取的是i18n设置的baseUrl，所以我们最好把site.url与i18n.baseUrl设置为一致的
+
 ## SEO、元数据、视口设置
 官网案例：https://nuxtjs.org.cn/docs/4.x/getting-started/seo-meta
 
