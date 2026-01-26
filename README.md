@@ -445,11 +445,22 @@ const dataTwice = await $fetch('/api/item')
 
 # 最佳实践
 ## sitemap站点地图的应用
+### 为什么要做站点地图
+#### 提升用户体验
+对于一些中大型网站，网站的目录、频道页面很多，用户一下找不到自己想要的页面，此时如果网站做了网站地图，用户通过网站地图可在短时间内找到自己想要的页面，当然网站地图要做的合理，这需要前期的细致规划。
+#### 提升蜘蛛的抓取效率、收录
+提升蜘蛛的抓取效率，从而促进网站收录。网站地图将网站所有的有效页面都放在了一起，可以让蜘蛛短时间内发现网站所有的链接，从而爬取收录。
+### 关于网站地图格式说明
+谷歌、百度：需要.xml格式 \
+雅虎：.txt格式
+### 如何提交 SiteMap 给搜索引擎
+参考链接：https://help.metinfo.cn/faq/398.html
 ### 安装依赖模块
 ```javascript
 npx nuxt module add @nuxtjs/sitemap
 ```
-安装完模块，会自动添加到nuxt.config.ts
+安装完模块，会自动添加到nuxt.config.ts配置
+
 ![img_17.png](img_17.png)
 ### 在nuxt.config.ts进行配置
 ```javascript
